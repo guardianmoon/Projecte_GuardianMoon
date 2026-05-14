@@ -36,26 +36,16 @@ El sistema es basa en un flux de dades circular dividit en tres capes:
 | **Frontend** | HTML5, CSS3 (Custom Retro Design), JavaScript |
 | **Automatització** | MacroDroid / iOS Shortcuts |
 
-graph LR
-    subgraph "Usuari (Hardware)"
-    A[Boto BLE / Joieria] -- Bluetooth 5.3 --> B(Smartphone)
-    end
-
-    subgraph "Comunicació (Mobile)"
-    B -- MacroDroid / Shortcuts --> C{HTTP POST}
-    end
-
-    subgraph "Servidor (Docker)"
-    C -- SSL / Port 443 --> D[Nginx Proxy]
-    D -- Proxy Pass --> E[Web Admin PHP]
-    E -- Query --> F[(MariaDB)]
-    E -- API Connection --> G[Odoo ERP]
-    end
-
-    subgraph "Monitoratge"
-    E -- Real-Time Data --> H[Dashboard Leaflet.js]
-    G -- Suport --> I[Tiquets de Suport]
-    end
+### Esquema de flux de dades
+```mermaid
+graph TD
+    A[Polzada BLE] -->|BLE 5.3| B[Smartphone Android/iOS]
+    B -->|Captura GPS + Bateria| C[Script MacroDroid/Shortcuts]
+    C -->|HTTPS POST| D[Nginx Reverse Proxy]
+    D --> E[Aplicació Web PHP]
+    E -->|Emmagatzematge| F[(MariaDB)]
+    E -->|Generació d'Incidències| G[Odoo ERP]
+    E -->|Visualització| H[Dashboard Interactiu]
 
 ## 4. Funcionalitats Principals
 - **Monitoratge en Temps Real:** Dashboard amb mapa interactiu que se centra en l'última alerta.
