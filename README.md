@@ -12,16 +12,16 @@ El projecte neix amb l'objectiu de minimitzar el temps de resposta en situacions
 ## 2. Arquitectura del Sistema
 El sistema es basa en un flux de dades circular dividit en tres capes:
 
--------### Capa de Hardware (IoT)-------------
+------- Capa de Hardware (IoT)-------------------
 * **Dispositiu:** Polsador Bluetooth Low Energy (BLE) integrat en joieria o accessoris.
 * **Protocol:** BLE 5.3 per a un consum mínim de bateria i connexió instantània.
 
--------### Capa de Comunicació (Mòbil)--------
+------- Capa de Comunicació (Mòbil)--------------
 * **Automatització:** Ús de MacroDroid (Android) o Shortcuts (iOS).
 * **Lògica:** En detectar la connexió del botó, el mòbil recull les coordenades GPS i el nivell de bateria.
 * **Transmissió:** Enviament de dades mitjançant peticions HTTP POST encriptades cap al servidor.
 
--------### Capa d'Infraestructura (Servidor)---
+------- Capa d'Infraestructura (Servidor)---------
 * **Contenidors:** Implementació basada en Docker per garantir la portabilitat.
 * **Seguretat:** Proxy invers amb Nginx i xifrat de dades SSL.
 * **Integració ERP/CRM (Odoo):** Connexió amb Odoo per a la gestió de clients, inventari de dispositius i generació automàtica de tiquets de suport en cas d'alerta crítica.
