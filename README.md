@@ -36,16 +36,7 @@ El sistema es basa en un flux de dades circular dividit en tres capes:
 | **Frontend** | HTML5, CSS3 (Custom Retro Design), JavaScript |
 | **Automatització** | MacroDroid / iOS Shortcuts |
 
-### Esquema de flux de dades
-```mermaid
-graph TD
-    A[Polzada BLE] -->|BLE 5.3| B[Smartphone Android/iOS]
-    B -->|Captura GPS + Bateria| C[Script MacroDroid/Shortcuts]
-    C -->|HTTPS POST| D[Nginx Reverse Proxy]
-    D --> E[Aplicació Web PHP]
-    E -->|Emmagatzematge| F[(MariaDB)]
-    E -->|Generació d'Incidències| G[Odoo ERP]
-    E -->|Visualització| H[Dashboard Interactiu]
+
 
 ## 4. Funcionalitats Principals
 - **Monitoratge en Temps Real:** Dashboard amb mapa interactiu que se centra en l'última alerta.
