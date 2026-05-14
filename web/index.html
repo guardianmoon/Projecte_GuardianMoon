@@ -1,0 +1,493 @@
+
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>Guardian Moon | Seguretat Intel·ligent</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="estil/estil.css">
+    <style>
+        /* Menú hamburguesa para móviles */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--accent);
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 1001;
+        }
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+            nav ul {
+                display: none;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                right: 0;
+                flex-direction: column;
+                background: rgba(3, 7, 18, 0.95);
+                padding: 1rem;
+                gap: 0.5rem;
+                border-bottom: 1px solid var(--glass-border);
+            }
+            nav ul.active {
+                display: flex;
+            }
+            nav ul li {
+                width: 100%;
+            }
+            nav ul a {
+                display: block;
+                padding: 0.75rem;
+                border-radius: 8px;
+                transition: all 0.3s ease;
+            }
+            nav ul a:hover {
+                background: rgba(0, 242, 255, 0.1);
+            }
+            .hero-content h1 {
+                font-size: 1.8rem;
+                line-height: 1.2;
+            }
+            .hero-content p {
+                font-size: 0.95rem;
+            }
+            .hero-btn-container {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .cta-button,
+            .cta-outline,
+            .cta-team {
+                width: 100%;
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="logo">GUARDIAN <span>MOON</span></a>
+        <button class="menu-toggle" id="menuToggle">
+            <i class="fas fa-bars"></i>
+        </button>
+        <ul id="navMenu">
+            <li><a href="index.html" class="active">Inici</a></li>
+            <li><a href="https://www.guardianmoon.cat/shop">Botiga</a></li>
+            <li><a href="login.php">Login</a></li> 
+            <li><a href="registre.php">Registre</a></li>
+            <li><a href="dashboard.php">Dashboard</a></li>
+            <li><a href="mi_panel.php">El meu Panell</a></li>
+        </ul>
+    </nav>
+    <header class="hero-banner" style="position: relative; overflow: hidden; padding-top: 80px; background: linear-gradient(rgba(3,7,18,0.6), rgba(3,7,18,0.9)), url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=1920&q=80'); background-size: cover; background-position: center;">
+        <div class="hero-content" style="position: relative; z-index: 1; text-align: center; color: #fff; padding: 0 20px;">
+          <h1>Seguretat Invisible.<br><span>Protecció Total.</span></h1>
+          <p>Fusionem alta joieria amb enginyeria IoT per oferir-te un sistema d'alerta immediata. El botó SOS més avançat, integrat en el teu dia a dia.</p>
+          <div class="hero-btn-container">
+            <a href="#detalles" class="cta-button">Saber‐ne més</a>
+            <a href="https://www.guardianmoon.cat" class="cta-outline">Veure Catàleg</a>
+            <a href="el-nostre-equip.html" class="cta-team">El Nostre Equip</a>
+          </div>
+        </div>
+    </header>
+    <div class="container" id="detalles">
+        <div class="section-header">
+            <h2>Tecnologia al servei de la teva tranquil·litat</h2>
+            <p>Un ecosistema complet dissenyat per actuar quan cada segon compta.</p>
+        </div>
+        <div class="features-grid">
+            <div class="card">
+                <i class="fas fa-satellite-dish icon-accent"></i>
+                <h3>Connexió BT 5.3</h3>
+                <p>Connexió ràpida i estable fins a 10 metres. La tecnologia Bluetooth de baix consum garanteix que el SOS estigui sempre llest.</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-microchip icon-accent"></i>
+                <h3>Infraestructura IoT</h3>
+                <p>Processament en temps real mitjançant contenidors Docker i servidors segurs per a una resposta immediata.</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-battery-full icon-accent"></i>
+                <h3>Autonomia d'Alta Durada</h3>
+                <p>Gràcies al protocol BLE, la bateria dura fins a 6 mesos en espera. Garanteix un funcionament operatiu i fiable per a qualsevol emergència sense necessitat de manteniment diari.</p>
+            </div>
+        </div>
+        <div class="card glass-panel" style="margin-top: 30px; padding: 3rem;">
+            <div class="panel-content" style="display: flex; align-items: center; gap: 60px; flex-wrap: wrap;">
+                <div class="text-side" style="flex: 1.5; min-width: 350px;">
+                    <h2 style="font-size: 2.2rem; margin-bottom: 20px;">Ecosistema Guardian Moon</h2>
+                    <ul class="check-list" style="list-style: none; padding: 0; font-size: 1.1rem; line-height: 2;">
+                        <li>
+                            <i class="fas fa-fingerprint" style="color: var(--accent); width: 25px;"></i> 
+                            <strong>Botó SOS:</strong> Activació remota d'emergència via Bluetooth 5.3 d'alta precisió.
+                        </li>
+                        <li>
+                            <i class="fas fa-robot" style="color: var(--accent); width: 25px;"></i> 
+                            <strong>Macro Intel·ligent:</strong> Protocol automàtic d'enviament d'ubicació GPS en temps real.
+                        </li>
+                        <li>
+                            <i class="fas fa-user-lock" style="color: var(--accent); width: 25px;"></i> 
+                            <strong>Dades Segures:</strong> Transmissió xifrada d'extrem a extrem cap al nostre servidor privat.
+                        </li>
+                    </ul>
+                    <div style="margin-top: 25px; font-size: 0.9rem; color: var(--text-dim); background: rgba(0,0,0,0.3); padding: 15px 20px; border-radius: 12px; border: 1px solid var(--glass-border); display: inline-block;">
+                        <strong>Especificacions Tècniques:</strong> ABS Resistenta | Rang 10m | Android 8+ & iOS 15+
+                    </div>
+                </div>
+                <div class="image-side" style="flex: 1; min-width: 300px; text-align: center;">
+                    <div style="position: relative; display: inline-block; width: 100%;">
+                        <img src="img/collar.png" alt="Collar SOS" style="width: 100%; max-width: 500px; height: 280px; object-fit: cover; border-radius: 20px; box-shadow: 0 0 40px var(--accent-glow); border: 1px solid var(--glass-border);">
+                        <div style="margin-top: 15px; color: var(--accent); font-weight: 800; font-size: 1rem; letter-spacing: 2px;">
+                            <i class="fab fa-bluetooth"></i> BT 5.3 ACTIVE LINK
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <p>&copy; 2026 Guardian Moon Project - Desenvolupat per Oussama, Mario e Issam</p>
+        <p class="tech-stack">BT 5.3 | MACRODROID | DOCKER | NGINX</p>
+    </footer>
+    <script>
+        // Menú hamburguesa
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.getElementById('navMenu');
+        menuToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+        // Cerrar menú al hacer clic en un enlace
+        navMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+            });
+        });
+        // Efecto parallax en el hero banner
+        window.addEventListener('scroll', function() {
+            const hero = document.querySelector('.hero-banner');
+            const scrollPosition = window.pageYOffset;
+            hero.style.backgroundPosition = `center ${scrollPosition * 0.5}px`;
+        });
+        // Efecto de ondas en el liquid glass
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+        let time = 0;
+        function animateLiquid() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = 'rgba(0, 242, 255, 0.05)';
+            for (let i = 0; i < 5; i++) {
+                ctx.beginPath();
+                ctx.arc(
+                    canvas.width / 2 + Math.sin(time + i) * 100,
+                    canvas.height / 2 + Math.cos(time + i) * 100,
+                    50 + Math.sin(time + i * 0.5) * 30,
+                    0,
+                    Math.PI * 2
+                );
+                ctx.fill();
+            }
+            time += 0.05;
+            requestAnimationFrame(animateLiquid);
+        }
+        animateLiquid();
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

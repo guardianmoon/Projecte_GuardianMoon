@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>El Nostre Equip - Guardian Moon</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="estil/estil.css">
+  <style>
+    /* Estils específics per a aquesta pàgina */
+    body {
+      background-color: #030712;
+      background-image: 
+        radial-gradient(circle at 0% 0%, rgba(0, 242, 255, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 100% 100%, rgba(0, 242, 255, 0.08) 0%, transparent 50%);
+      color: var(--text-main);
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 960px;
+      margin: 100px auto 20px;
+      padding: 20px;
+    }
+    .page-header {
+      text-align: center;
+      margin-bottom: 50px;
+      padding: 40px 20px;
+      background: linear-gradient(135deg, rgba(10, 31, 46, 0.8), rgba(0, 50, 80, 0.6));
+      border-radius: 20px;
+      border: 1px solid var(--glass-border);
+      box-shadow: 0 0 30px rgba(0, 242, 255, 0.2);
+    }
+    .page-header h1 {
+      font-size: 3rem;
+      color: var(--accent);
+      margin: 0;
+      text-shadow: 0 0 20px var(--accent-glow);
+    }
+    section {
+      margin-bottom: 40px;
+      padding: 30px;
+      background: rgba(17, 24, 39, 0.5);
+      border-radius: 16px;
+      border: 1px solid var(--glass-border);
+    }
+    section h2 {
+      color: var(--accent);
+      font-size: 2rem;
+      margin-top: 0;
+      margin-bottom: 20px;
+    }
+    section p {
+      color: var(--text-dim);
+      line-height: 1.8;
+      font-size: 1.05rem;
+    }
+    .team-section {
+      display: flex;
+      flex-wrap:wrap;
+      gap: 20px;
+      justify-content: center;
+      margin-top: 30px;
+      overflow-x: visible;
+    }
+    .team-member {
+      background: linear-gradient(135deg, rgba(0, 50, 80, 0.4), rgba(10, 31, 46, 0.6));
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      padding: 25px;
+      flex: 0 0 280px;
+      min-width: 280px;
+      max-width: 300px;
+      text-align: center;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+    .team-member:hover {
+      border-color: var(--accent);
+      box-shadow: 0 0 20px rgba(0, 242, 255, 0.3);
+      transform: translateY(-5px);
+    }
+    .team-member img {
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+      border: 2px solid var(--glass-border);
+      margin-bottom: 15px;
+    }
+    .team-member h3 {
+      margin: 15px 0 10px;
+      color: var(--accent);
+      font-size: 1.3rem;
+    }
+    .team-member p {
+      color: var(--text-dim);
+      font-size: 0.95rem;
+      margin: 8px 0;
+    }
+    .team-member p strong {
+      color: var(--text-main);
+    }
+    
+      /* Amagar el menú hamburguesa a el-nostre-equip.html */
+   .menu-toggle {
+        display: none !important;
+    }
+    /* Assegurar que el menú de navegació es mostra sempre */
+    nav ul {
+        display: flex !important;
+    }
+    
+
+    /* Augmentem el contenidor per donar aire */
+.container {
+  max-width: 1100px; /* Abans 960px */
+  margin: 100px auto 20px;
+  padding: 20px;
+}
+
+/* Forcem la fila única */
+.team-section {
+  display: flex;
+  flex-wrap: nowrap; /* Canvia 'wrap' per 'nowrap' per prohibir el salt de línia */
+  gap: 20px;
+  justify-content: space-between; /* Millor distribució */
+  margin-top: 30px;
+  overflow-x: auto; /* Si la pantalla és molt petita (mòbil), permetrà fer scroll lateral en lloc de trencar el disseny */
+  padding-bottom: 10px;
+}
+
+/* Ajustem una mica la mida de les targetes */
+.team-member {
+  background: linear-gradient(135deg, rgba(0, 50, 80, 0.4), rgba(10, 31, 46, 0.6));
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  padding: 25px;
+  flex: 1 1 0; /* Fem que es reparteixin l'espai equitativament */
+  min-width: 250px; /* Mida mínima raonable */
+  text-align: center;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+    
+
+    
+    
+  </style>
+</head>
+<body>
+  <!-- Navegació reutilitzada del disseny global -->
+  <nav>
+    <a href="index.html" class="logo">GUARDIAN <span>MOON</span></a>
+    <button class="menu-toggle" id="menuToggle">
+      <i class="fas fa-bars"></i>
+    </button>
+    <ul id="navMenu">
+      <li><a href="index.html">Inici</a></li>
+      <li><a href="https://www.guardianmoon.cat/shop">Botiga</a></li>
+      <li><a href="login.php">Login</a></li>
+      <li><a href="registre.php">Registre</a></li>
+      <li><a href="dashboard.php">Dashboard</a></li>
+      <li><a href="el-nostre-equip.html" class="active">El Nostre Equip</a></li>
+    </ul>
+  </nav>
+  <div class="container">
+    <!-- Header de la pàgina amb estil consistent -->
+    <div class="page-header">
+      <h1>🌙 El Nostre Equip</h1>
+      <p style="color: var(--text-dim); margin-top: 10px; font-size: 1.1rem;">
+        Els desenvolupadors darrere de Guardian Moon
+      </p>
+    </div>
+    <!-- Secció Qui Som -->
+    <section>
+      <h2>Qui Som</h2>
+      <p>A Guardian Moon, no només creem tecnologia; creem tranquil·litat. Som un equip de tres desenvolupadors apassionats pels sistemes i la seguretat, units per un objectiu comú: utilitzar l'Internet de les Coses (IoT) per protegir el que més importa.</p>
+      <p>El nostre projecte neix de la necessitat de fer que la seguretat personal sigui accessible, discreta i extremadament ràpida. Creiem que ningú hauria de sentir-se sol en una situació d'emergència.</p>
+    </section>
+    <!-- Secció El Nostre Equip -->
+    <section>
+      <h2>El Nostre Equip</h2>
+      <p>Cada membre de Guardian Moon és una peça clau per garantir que el sistema mai falli:</p>
+      <div class="team-section">
+        <!-- Membre: Mario -->
+        <div class="team-member">
+          <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=400&q=80" alt="Mario">
+          <h3>🔧 Mario</h3>
+          <p><strong>Hardware &amp; IoT Architect</strong></p>
+          <p>Disseny i integració del polsador físic (joieria) i la comunicació Bluetooth amb l'ecosistema mòbil.</p>
+        </div>
+        <!-- Membre: Oussama -->
+        <div class="team-member">
+          <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=400&q=80" alt="Oussama">
+          <h3>💻 Oussama</h3>
+          <p><strong>Web &amp; Interface Lead</strong></p>
+          <p>Desenvolupament del Dashboard d'usuari, programació del Backend en PHP i gestió de la base de dades MariaDB.</p>
+        </div>
+        <!-- Membre: Issam -->
+        <div class="team-member">
+          <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=400&q=80" alt="Issam">
+          <h3>🔒 Issam</h3>
+          <p><strong>Infrastructure &amp; Security</strong></p>
+          <p>Arquitectura de contenidors Docker, gestió de xarxes aïllades, Proxy Revers (Nginx) i seguretat SSL.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!-- Footer consistent amb el disseny global -->
+  <footer>
+    <p>&copy; <script>document.write(new Date().getFullYear());</script> Guardian Moon. Tots els drets reservats.</p>
+    <p class="tech-stack">BT 5.3 | DOCKER | NGINX | MARIADB</p>
+  </footer>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
