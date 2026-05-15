@@ -1,0 +1,156 @@
+# ==============================================================================
+# CONFIGURACIÓ D'INFRAESTRUCTURA EN ALTA DISPONIBILITAT (DOCKER SWARM)
+# PROJECTE: guardianmoon.cat
+# ==============================================================================
+
+# Versió del format del fitxer. La 3.8 és la més estable per a Docker Swarm.
+version: '3.8'
+
+services:
+
+  # ----------------------------------------------------------------------------
+  # PROXY: Nginx Proxy Manager (Gestor de trànsit i SSL)
+  # ----------------------------------------------------------------------------
+  proxy:
+    # Imatge que inclou Nginx i una interfície web per gestionar dominis.
+    image: 'jc21/nginx-proxy-manager:latest'
+    hostname: proxy.guardianmoon.cat
+    # Ports exposats a l'exterior de la màquina virtual.
+    ports:
+      - '80:80'   # Trànsit HTTP normal.
+      - '443:443' # Trànsit HTTPS segur.
+      - '81:81'   # Tauler de control de l'administrador.
+    environment:
+      # Configuració de connexió a la seva pròpia base de dades.
+      - DB_MYSQL_HOST=mariadb
+      - DB_MYSQL_PORT=3306
+      - DB_MYSQL_USER=admin
+      - DB_MYSQL_PASSWORD=${DB_PASSWORD} # Agafa la contrasenya del fitxer .env
+      - DB_MYSQL_NAME=npm
+    volumes:
+      # Persistència: guarda configuracions i certificats SSL al disc local.
+      - ./npm/data:/data
+      - ./npm/letsencrypt:/etc/letsencrypt
+    networks:
+      - dmz # Es connecta a la zona pública per rebre peticions.
+      - lan # Es connecta a la zona privada per parlar amb les bases de dades.
+    deploy:
+      mode: replicated
+      replicas: 2 # Mantenim 2 instàncies per si una falla (Alta Disponibilitat).
+
+  # ----------------------------------------------------------------------------
+  # WEB: Aplicació CRM personalitzada
+  # ----------------------------------------------------------------------------
+  web:
+    # Imatge pròpia creada amb el Dockerfile.
+    image: crm.guardianmoon.cat:latest
+    hostname: crm.guardianmoon.cat
+    networks:
+      - dmz
+      - lan
+    deploy:
+      mode: replicated
+      replicas: 2 # Balanceig de càrrega: les peticions es reparteixen entre les dues.
+
+  # ----------------------------------------------------------------------------
+  # MARIADB: Base de dades SQL per al Proxy
+  # ----------------------------------------------------------------------------
+  mariadb:
+    image: mariadb:10.11
+    hostname: mariadb.guardianmoon.cat
+    environment:
+      - MARIADB_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
+      - MARIADB_DATABASE=npm
+      - MARIADB_USER=admin
+      - MARIADB_PASSWORD=${DB_PASSWORD}
+    volumes:
+      - ./mariadb/data:/var/lib/mysql # On es guarden realment les taules.
+    networks:
+      - lan # Només accessible des de dins del servidor (Seguretat).
+    healthcheck:
+      # Comprovació de salut: verifica si la base de dades respon.
+      # El "|| exit 0" evita que Swarm la mati si triga a arrencar.
+      test: ["CMD-SHELL", "mariadb-admin ping -h localhost -u root -p$${DB_ROOT_PASSWORD} || exit 0"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s # Temps de cortesia abans de començar a vigilar-la.
+    deploy:
+      replicas: 1 # Una base de dades no es replica fàcilment sense clúster Galera.
+
+  # ----------------------------------------------------------------------------
+  # POSTGRES: Base de dades per a l'ERP Odoo
+  # ----------------------------------------------------------------------------
+  postgres:
+    image: postgres:15-alpine
+    hostname: psql.guardianmoon.cat
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=odoo
+    volumes:
+      - ./postgres/data:/var/lib/postgresql/data
+    networks:
+      - lan
+    healthcheck:
+      # Comprova si el motor de Postgres està llest per rebre connexions d'Odoo.
+      test: ["CMD", "pg_isready", "-U", "${POSTGRES_USER}", "-d", "odoo"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    deploy:
+      replicas: 1
+
+  # ----------------------------------------------------------------------------
+  # ODOO: Sistema de Gestió Empresarial (ERP)
+  # ----------------------------------------------------------------------------
+  odoo:
+    image: odoo:latest
+    hostname: www.guardianmoon.cat
+    depends_on:
+      - postgres # Indica que Odoo necessita Postgres per funcionar.
+    environment:
+      - HOST=postgres
+      - USER=${POSTGRES_USER}
+      - PASSWORD=${POSTGRES_PASSWORD}
+    volumes:
+      - ./odoo/data:/var/lib/odoo
+      - ./odoo/config:/etc/odoo
+    networks:
+      - dmz
+      - lan
+    deploy:
+      mode: replicated
+      replicas: 2
+
+  # ----------------------------------------------------------------------------
+  # ADMINER: Eina de gestió visual de bases de dades
+  # ----------------------------------------------------------------------------
+  adminer:
+    image: adminer:latest
+    hostname: adminer.guardianmoon.cat
+    networks:
+      - lan # Per gestionar MariaDB i Postgres internament.
+      - dmz # Per poder-hi accedir mitjançant el Proxy.
+    deploy:
+      mode: replicated
+      replicas: 2
+
+# ------------------------------------------------------------------------------
+# BLOC 2: XARXES (Les carreteres virtuals)
+# ------------------------------------------------------------------------------
+networks:
+  # DMZ: Zona de cara al públic. Rang IP 10.99.10.x.
+  dmz:
+    driver: overlay # Overlay és necessari per a Docker Swarm.
+    ipam:
+      config:
+        - subnet: 10.99.10.0/24
+  
+  # LAN: Zona privada i segura. Rang IP 10.99.20.x.
+  lan:
+    driver: overlay
+    internal: false # Permet que els contenidors surtin a Internet per actualitzar-se.
+    ipam:
+      config:
+        - subnet: 10.99.20.0/24
