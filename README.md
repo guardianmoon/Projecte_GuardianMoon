@@ -59,28 +59,28 @@ Per desplegar el codi font d'aquest repositori, es requereix:
 ## 7. Desplegament de la Infraestructura (Docker Swarm)
 El fitxer docker-compose.yml inclòs està optimitzat per treballar en Alta Disponibilitat (HA) replicant els serveis crítics en un clúster. Segueix aquests passos per fer el desplegament:
 
-Pas 1: Configurar les Variables d'Entorn
-Atès que el fitxer d'orquestració utilitza variables protegides per seguretat, crea un fitxer anomenat .env a la mateixa carpeta on es troba el docker-compose.yml i defineix les teves claus:
+- **Pas 1: Configurar les Variables d'Entorn**
+  Atès que el fitxer d'orquestració utilitza variables protegides per seguretat, crea un fitxer anomenat .env a la mateixa carpeta on es troba el docker-compose.yml i defineix les teves claus:
 
-Fragmento de código
-DB_PASSWORD=la_teva_contrasenya_usuari_db
-DB_ROOT_PASSWORD=la_teva_contrasenya_root_db
-POSTGRES_USER=odoo
-POSTGRES_PASSWORD=la_teva_contrasenya_postgres
-Pas 2: Inicialitzar el mode Swarm
-Si el teu entorn encara no opera en mode clúster, executa la inicialització al node principal (Manager):
+  Fragmento de código
+  DB_PASSWORD=la_teva_contrasenya_usuari_db
+  DB_ROOT_PASSWORD=la_teva_contrasenya_root_db
+  POSTGRES_USER=odoo
+  POSTGRES_PASSWORD=la_teva_contrasenya_postgres
+- **Pas 2: Inicialitzar el mode Swarm**
+  Si el teu entorn encara no opera en mode clúster, executa la inicialització al node principal (Manager):
 
-Bash
-docker swarm init
-Pas 3: Llançar el Stack de Serveis
-Per aixecar tota l'infraestructura replicada (Nginx Proxy Manager, Aplicació Web, MariaDB, Postgres, Odoo i Adminer) sota el rang de xarxes overlay internes definides, executa:
+  Bash
+  docker swarm init
+- **Pas 3: Llançar el Stack de Serveis**
+  Per aixecar tota l'infraestructura replicada (Nginx Proxy Manager, Aplicació Web, MariaDB, Postgres, Odoo i Adminer) sota el rang de xarxes overlay internes definides, executa:
 
-Bash
-docker stack deploy -c docker-compose.yml guardianmoon
-Pas 4: Verificar l'estat dels Microserveis
-Pots verificar que els serveis i les seves rèpliques estan totalment operatius (2/2 en els serveis balancejats) mitjançant la comanda:
+  Bash
+  docker stack deploy -c docker-compose.yml guardianmoon
+- **Pas 4: Verificar l'estat dels Microserveis**
+  Pots verificar que els serveis i les seves rèpliques estan totalment operatius (2/2 en els serveis balancejats) mitjançant la comanda:
 
-Bash
-docker service ls
+  Bash
+  docker service ls
 
 © 2026 GuardianMoon Team - Tecnologia que salva vides.
